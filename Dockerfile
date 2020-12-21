@@ -1,17 +1,13 @@
-FROM node:14.4-alpine3.10
+FROM node:15.3.0
 
 WORKDIR /container
-
-RUN mkdir -p /container/node_modules && chown -R node:node /container
-
 COPY package*.json ./
-
-USER node
-
 RUN npm i
 
-COPY --chown=node:node . .
+COPY . .
 
 EXPOSE 2000
 
+RUN chown -R node:node /container
+USER node
 CMD ["npm", "start"]
